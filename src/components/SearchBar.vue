@@ -1,7 +1,7 @@
 <template>
   <q-input
     dense
-    standout="bg-white text-black"
+    color="accent"
     clearable
     clear-icon="clear"
     outlined

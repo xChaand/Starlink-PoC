@@ -1,19 +1,21 @@
 <template>
   <div class="row">
-    <q-card v-for="product in products" :key="product.id" class="col-3">
-      <q-img :src="product.img" />
-      <q-separator inset />
-      <div class="col">
-        <q-card-section>
-          <div class="overflow-2 q-mb-sm">{{ product.name }}</div>
-          <div class="text-subtitle2 text-bold">{{ product.price }}</div>
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn icon-right="info" dense label="info" />
-          <q-btn icon-right="add" dense label="add" />
-        </q-card-actions>
-      </div>
-    </q-card>
+    <div v-for="product in products" :key="product.id" class="col-3 q-pa-md">
+      <q-card flat bordered>
+        <q-img :src="product.img" />
+        <q-separator inset />
+        <div class="col">
+          <q-card-section>
+            <p class="overflow-2 q-mb-sm">{{ product.name }}</p>
+            <p class="text-subtitle2 text-bold no-margin">{{ product.price }}</p>
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn dense flat icon-right="info" label="info" />
+            <q-btn dense unelevated color="accent" icon-right="add" label="add" />
+          </q-card-actions>
+        </div>
+      </q-card>
+    </div>
   </div>
 </template>
 
