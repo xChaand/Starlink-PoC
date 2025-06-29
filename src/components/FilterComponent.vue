@@ -29,7 +29,7 @@ export default defineComponent({
   setup() {
     const priceRange = ref({ min: 0, max: 9000 });
     return {
-      model: ref('x'),
+      model: ref('Featured'),
       options: ['Featured', 'Price: High to low', 'Price: Low to high', 'Newest'],
       priceRange,
     };
