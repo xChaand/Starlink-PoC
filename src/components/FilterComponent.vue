@@ -4,7 +4,8 @@
       outlined
       dense
       color="accent"
-      v-model="model"
+      v-model="selectedOption"
+      @update:model-value="$emit('updateFilter', $event)"
       :options="options"
       label="Sort by"
       class="q-mr-sm"
@@ -23,14 +24,18 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { Filter } from 'components/models';
 
 export default defineComponent({
   name: 'FilterComponent',
+  emits: ['updateFilter'],
   setup() {
     const priceRange = ref({ min: 0, max: 9000 });
+    const selectedOption = ref<Filter>(Filter.Featured);
+    const options: Filter[] = [Filter.Featured, Filter.High, Filter.Low, Filter.New];
     return {
-      model: ref('Featured'),
-      options: ['Featured', 'Price: High to low', 'Price: Low to high', 'Newest'],
+      selectedOption,
+      options,
       priceRange,
     };
   },

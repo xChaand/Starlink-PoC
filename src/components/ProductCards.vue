@@ -7,7 +7,7 @@
         <div class="col">
           <q-card-section>
             <p class="overflow-2 q-mb-sm">{{ product.name }}</p>
-            <p class="text-subtitle2 text-bold no-margin">{{ product.price }}</p>
+            <p class="text-subtitle2 text-bold no-margin">{{ product.price }} QAR</p>
           </q-card-section>
           <q-card-actions align="right">
             <q-btn dense flat icon-right="info" label="info" />
