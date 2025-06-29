@@ -11,10 +11,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, type PropType } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import ProductCards from 'components/ProductCards.vue';
 import FilterComponent from 'components/FilterComponent.vue';
 import { type IProduct, Filter } from 'components/models';
+import { useProductStore } from 'src/stores/products.store';
 
 export default defineComponent({
   name: 'ProductListing',
@@ -24,32 +25,36 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    products: {
-      type: Array as PropType<IProduct[]>,
-      required: true,
-    },
   },
-  setup(props) {
+  setup() {
+    const store = useProductStore();
     const filteredProducts = ref<IProduct[]>([]);
+    const products = computed(() => store.products);
 
     function filterOption(option: Filter): void {
       switch (option) {
         case Filter.Featured:
-          filteredProducts.value = props.products;
+          filteredProducts.value = products.value;
           break;
         case Filter.High:
-          filteredProducts.value = props.products.toSorted((a, b) => b.price - a.price);
+          filteredProducts.value = products.value.toSorted((a, b) => b.price - a.price);
           break;
         case Filter.Low:
-          filteredProducts.value = props.products.toSorted((a, b) => a.price - b.price);
+          filteredProducts.value = products.value.toSorted((a, b) => a.price - b.price);
           break;
         case Filter.New:
-          filteredProducts.value = props.products.filter((product) => product.new);
+          filteredProducts.value = products.value.filter((product) => product.new);
           break;
       }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
+      await store.fetchProducts();
+      console.log(store.products);
+      // filterOption(Filter.Featured);
+    });
+
+    watch(products, () => {
       filterOption(Filter.Featured);
     });
 
