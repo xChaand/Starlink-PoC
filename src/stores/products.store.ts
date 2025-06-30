@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { type IProduct } from 'components/models';
 import { ref } from 'vue';
 
-export const useProductStore = defineStore('products', () => {
+export const useProductStore = defineStore('storeProducts', () => {
   const products = ref<IProduct[]>([]);
   const loading = ref(false);
 

@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts">
+import type { ComputedRef } from 'vue';
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import ProductCards from 'components/ProductCards.vue';
 import FilterComponent from 'components/FilterComponent.vue';
@@ -27,10 +28,11 @@ export default defineComponent({
     },
   },
   setup() {
-    const store = useProductStore();
-    const filteredProducts = ref<IProduct[]>([]);
-    const products = computed(() => store.products);
+    const store = useProductStore(); // Store with all products
+    const products: ComputedRef<IProduct[]> = computed(() => store.products);
+    const filteredProducts = ref<IProduct[]>([]); // List of products passed to child
 
+    // Set filteredProducts using types of filters
     function filterOption(option: Filter): void {
       switch (option) {
         case Filter.Featured:
@@ -48,12 +50,13 @@ export default defineComponent({
       }
     }
 
+    // Fetch products when the component is mounted
     onMounted(async () => {
       await store.fetchProducts();
-      console.log(store.products);
-      // filterOption(Filter.Featured);
+      console.log(products.value);
     });
 
+    // Watch for changes in products (changes when store updates) and apply the default filter
     watch(products, () => {
       filterOption(Filter.Featured);
     });
